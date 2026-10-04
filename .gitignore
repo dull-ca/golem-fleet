@@ -1,0 +1,14 @@
+.devenv/
+.direnv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+generated/
+diagnostics/
+result
+.check
