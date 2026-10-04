@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.12.17"
+          python-version: "3.14"
+      - name: sync the locked environment
+        run: uv sync --locked
+      - name: ruff format
+        run: uvx ruff@0.16.1 format --check .
+      - name: ruff check
+        run: uvx ruff@0.16.1 check .
+      - name: ty check
+        run: uvx ty@0.0.65 check
+      - name: pytest
+        run: uv run --locked pytest
